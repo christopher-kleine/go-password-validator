@@ -37,3 +37,13 @@ func LogPow(expBase float64, pow int, logBase float64) float64 {
 	}
 	return total
 }
+
+// GetEntropySlice returns the entropy in bits for each password in a slice
+// See the ReadMe for more information
+func GetEntropySlice(passwords []string) []float64 {
+	entropy := make([]float64, len(passwords))
+	for i, password := range passwords {
+		entropy[i] = getEntropy(password)
+	}
+	return entropy
+}

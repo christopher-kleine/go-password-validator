@@ -64,3 +64,15 @@ func Validate(password string, minEntropy float64) error {
 
 	return errors.New("insecure password, try using a longer password")
 }
+
+// ValidateSlice takes a slice of passwords and returns a slice of errors
+// that correspond to the passwords. If the password is valid, the error
+// will be nil. If the password is invalid, the error will be the same
+// as the Validate function
+func ValidateSlice(passwords []string, minEntropy float64) []error {
+	errors := make([]error, len(passwords))
+	for i, password := range passwords {
+		errors[i] = Validate(password, minEntropy)
+	}
+	return errors
+}
