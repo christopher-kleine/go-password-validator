@@ -1,4 +1,4 @@
-package passwordvalidator
+package pwcheck
 
 import (
 	"math"
@@ -11,11 +11,11 @@ func GetEntropy(password string) float64 {
 }
 
 func getEntropy(password string) float64 {
-	base := getBase(password)
-	length := getLength(password)
+	base := GetBase(password)
+	length := GetLength(password)
 
 	// calculate log2(base^length)
-	return logPow(float64(base), length, 2)
+	return LogPow(float64(base), length, 2)
 }
 
 func logX(base, n float64) float64 {
@@ -29,7 +29,7 @@ func logX(base, n float64) float64 {
 // logPow calculates log_base(x^y)
 // without leaving logspace for each multiplication step
 // this makes it take less space in memory
-func logPow(expBase float64, pow int, logBase float64) float64 {
+func LogPow(expBase float64, pow int, logBase float64) float64 {
 	// logb (MN) = logb M + logb N
 	total := 0.0
 	for i := 0; i < pow; i++ {

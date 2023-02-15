@@ -1,17 +1,17 @@
-package passwordvalidator
+package pwcheck
 
 import "strings"
 
-const (
-	replaceChars      = `!@$&*`
-	sepChars          = `_-., `
-	otherSpecialChars = `"#%'()+/:;<=>?[\]^{|}~`
-	lowerChars        = `abcdefghijklmnopqrstuvwxyz`
-	upperChars        = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
-	digitsChars       = `0123456789`
+var (
+	ReplaceChars      = `!@$&*`
+	SepChars          = `_-., `
+	OtherSpecialChars = `"#%'()+/:;<=>?[\]^{|}~`
+	LowerChars        = `abcdefghijklmnopqrstuvwxyz`
+	UpperChars        = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+	DigitsChars       = `0123456789`
 )
 
-func getBase(password string) int {
+func GetBase(password string) int {
 	chars := map[rune]struct{}{}
 	for _, c := range password {
 		chars[c] = struct{}{}
@@ -27,17 +27,17 @@ func getBase(password string) int {
 
 	for c := range chars {
 		switch {
-		case strings.ContainsRune(replaceChars, c):
+		case strings.ContainsRune(ReplaceChars, c):
 			hasReplace = true
-		case strings.ContainsRune(sepChars, c):
+		case strings.ContainsRune(SepChars, c):
 			hasSep = true
-		case strings.ContainsRune(otherSpecialChars, c):
+		case strings.ContainsRune(OtherSpecialChars, c):
 			hasOtherSpecial = true
-		case strings.ContainsRune(lowerChars, c):
+		case strings.ContainsRune(LowerChars, c):
 			hasLower = true
-		case strings.ContainsRune(upperChars, c):
+		case strings.ContainsRune(UpperChars, c):
 			hasUpper = true
-		case strings.ContainsRune(digitsChars, c):
+		case strings.ContainsRune(DigitsChars, c):
 			hasDigits = true
 		default:
 			base++
@@ -45,22 +45,22 @@ func getBase(password string) int {
 	}
 
 	if hasReplace {
-		base += len(replaceChars)
+		base += len(ReplaceChars)
 	}
 	if hasSep {
-		base += len(sepChars)
+		base += len(SepChars)
 	}
 	if hasOtherSpecial {
-		base += len(otherSpecialChars)
+		base += len(OtherSpecialChars)
 	}
 	if hasLower {
-		base += len(lowerChars)
+		base += len(LowerChars)
 	}
 	if hasUpper {
-		base += len(upperChars)
+		base += len(UpperChars)
 	}
 	if hasDigits {
-		base += len(digitsChars)
+		base += len(DigitsChars)
 	}
 	return base
 }

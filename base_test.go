@@ -1,54 +1,56 @@
-package passwordvalidator
+package pwcheck_test
 
 import (
 	"testing"
+
+	"github.com/christopher-kleine/pwcheck"
 )
 
 func TestGetBase(t *testing.T) {
-	actual := getBase("abcd")
-	expected := len(lowerChars)
+	actual := pwcheck.GetBase("abcd")
+	expected := len(pwcheck.LowerChars)
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}
 
-	actual = getBase("abcdA")
-	expected = len(lowerChars) + len(upperChars)
+	actual = pwcheck.GetBase("abcdA")
+	expected = len(pwcheck.LowerChars) + len(pwcheck.UpperChars)
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}
 
-	actual = getBase("A")
-	expected = len(upperChars)
+	actual = pwcheck.GetBase("A")
+	expected = len(pwcheck.UpperChars)
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}
 
-	actual = getBase("^_")
-	expected = len(otherSpecialChars) + len(sepChars)
+	actual = pwcheck.GetBase("^_")
+	expected = len(pwcheck.OtherSpecialChars) + len(pwcheck.SepChars)
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}
 
-	actual = getBase("^")
-	expected = len(otherSpecialChars)
+	actual = pwcheck.GetBase("^")
+	expected = len(pwcheck.OtherSpecialChars)
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}
 
-	actual = getBase("!")
-	expected = len(replaceChars)
+	actual = pwcheck.GetBase("!")
+	expected = len(pwcheck.ReplaceChars)
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}
 
-	actual = getBase("123")
-	expected = len(digitsChars)
+	actual = pwcheck.GetBase("123")
+	expected = len(pwcheck.DigitsChars)
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}
 
-	actual = getBase("123ü")
-	expected = len(digitsChars) + 1
+	actual = pwcheck.GetBase("123ü")
+	expected = len(pwcheck.DigitsChars) + 1
 	if actual != expected {
 		t.Errorf("Wanted %v, got %v", expected, actual)
 	}

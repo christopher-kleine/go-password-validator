@@ -1,14 +1,22 @@
-package passwordvalidator
+package pwcheck
 
-const (
-	seqNums      = "0123456789"
-	seqKeyboard0 = "qwertyuiop"
-	seqKeyboard1 = "asdfghjkl"
-	seqKeyboard2 = "zxcvbnm"
-	seqAlphabet  = "abcdefghijklmnopqrstuvwxyz"
+var (
+	sequences = []string{
+		"0123456789",
+		"1234567890ß",
+		"qwertyuiop",
+		"asdfghjkl",
+		"zxcvbnm",
+		"abcdefghijklmnopqrstuvwxyz",
+		"qwertzuiopü",
+		"asdfghjklöä#",
+		"yxcvbnm,.-",
+		"753159",
+		"/*-",
+	}
 )
 
-func removeMoreThanTwoFromSequence(s, seq string) string {
+func RemoveMoreThanTwoFromSequence(s, seq string) string {
 	seqRunes := []rune(seq)
 	runes := []rune(s)
 	matches := 0
@@ -46,7 +54,7 @@ func deleteRuneAt(runes []rune, i int) []rune {
 	return runes
 }
 
-func getReversedString(s string) string {
+func GetReversedString(s string) string {
 	n := 0
 	rune := make([]rune, len(s))
 	for _, r := range s {
@@ -62,7 +70,7 @@ func getReversedString(s string) string {
 	return string(rune)
 }
 
-func removeMoreThanTwoRepeatingChars(s string) string {
+func RemoveMoreThanTwoRepeatingChars(s string) string {
 	var prevPrev rune
 	var prev rune
 	runes := []rune(s)
@@ -78,17 +86,11 @@ func removeMoreThanTwoRepeatingChars(s string) string {
 	return string(runes)
 }
 
-func getLength(password string) int {
-	password = removeMoreThanTwoRepeatingChars(password)
-	password = removeMoreThanTwoFromSequence(password, seqNums)
-	password = removeMoreThanTwoFromSequence(password, seqKeyboard0)
-	password = removeMoreThanTwoFromSequence(password, seqKeyboard1)
-	password = removeMoreThanTwoFromSequence(password, seqKeyboard2)
-	password = removeMoreThanTwoFromSequence(password, seqAlphabet)
-	password = removeMoreThanTwoFromSequence(password, getReversedString(seqNums))
-	password = removeMoreThanTwoFromSequence(password, getReversedString(seqKeyboard0))
-	password = removeMoreThanTwoFromSequence(password, getReversedString(seqKeyboard1))
-	password = removeMoreThanTwoFromSequence(password, getReversedString(seqKeyboard2))
-	password = removeMoreThanTwoFromSequence(password, getReversedString(seqAlphabet))
+func GetLength(password string) int {
+	password = RemoveMoreThanTwoRepeatingChars(password)
+	for _, seq := range sequences {
+		password = RemoveMoreThanTwoFromSequence(password, seq)
+		password = RemoveMoreThanTwoFromSequence(password, GetReversedString(seq))
+	}
 	return len(password)
 }

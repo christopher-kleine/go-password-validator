@@ -1,4 +1,4 @@
-package passwordvalidator
+package pwcheck
 
 import (
 	"errors"
@@ -25,17 +25,17 @@ func Validate(password string, minEntropy float64) error {
 
 	for _, c := range password {
 		switch {
-		case strings.ContainsRune(replaceChars, c):
+		case strings.ContainsRune(ReplaceChars, c):
 			hasReplace = true
-		case strings.ContainsRune(sepChars, c):
+		case strings.ContainsRune(SepChars, c):
 			hasSep = true
-		case strings.ContainsRune(otherSpecialChars, c):
+		case strings.ContainsRune(OtherSpecialChars, c):
 			hasOtherSpecial = true
-		case strings.ContainsRune(lowerChars, c):
+		case strings.ContainsRune(LowerChars, c):
 			hasLower = true
-		case strings.ContainsRune(upperChars, c):
+		case strings.ContainsRune(UpperChars, c):
 			hasUpper = true
-		case strings.ContainsRune(digitsChars, c):
+		case strings.ContainsRune(DigitsChars, c):
 			hasDigits = true
 		}
 	}
